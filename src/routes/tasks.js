@@ -13,4 +13,24 @@ router.get('/', (request, response) => {
   });
 });
 
+router.get('/:taskId', (request, response) => {
+  response.status(200).json({
+    taskId: request.params.taskId,
+    message: 'Handling HTTP GET by ID'
+  });
+});
+
+router.patch('/:taskId', (request, response) => {
+  response.status(200).json({
+    taskId: request.params.taskId,
+    message: 'Handling HTTP PATCH by ID'
+  });
+});
+
+router.delete('/:taskId', (request, response) => {
+  response.status(200).json({
+    taskId: request.params.taskId,
+    message: 'Handling HTTP DELETE by ID'
+  });
+});
 module.exports = router;
