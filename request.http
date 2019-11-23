@@ -5,3 +5,5 @@ Host: localhost:8080
 ##########
 GET /api/tasks/38 HTTP/1.1
 Host: localhost:8080
+# dm124:alunoinatel
+Authorization: Basic ZG0xMjQ6YWx1bm9pbmF0ZWw=
