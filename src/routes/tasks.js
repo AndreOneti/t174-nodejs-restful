@@ -36,10 +36,10 @@ router.patch('/:taskId', checkAuth, (request, response) => {
   });
 });
 
-router.delete('/:taskId', checkAuth, (request, response) => {
-  response.status(200).json({
-    taskId: request.params.taskId,
-    message: 'Handling HTTP DELETE by ID'
-  });
+router.delete('/:taskId', checkAuth, async (request, response) => {
+  const isDeleted = await taskService.delete(request.params.taskId);
+  isDeleted
+    ? response.end()
+    : notFound(request, response);
 });
 module.exports = router;
