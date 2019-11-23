@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/', (request, response) => {
+const checkAuth = require('../middleware/check-auth');
+
+router.post('/', checkAuth, (request, response) => {
   response.status(200).json({
     message: 'Handling POST requests to /api/tasks'
   });
@@ -20,14 +22,14 @@ router.get('/:taskId', (request, response) => {
   });
 });
 
-router.patch('/:taskId', (request, response) => {
+router.patch('/:taskId', checkAuth, (request, response) => {
   response.status(200).json({
     taskId: request.params.taskId,
     message: 'Handling HTTP PATCH by ID'
   });
 });
 
-router.delete('/:taskId', (request, response) => {
+router.delete('/:taskId', checkAuth, (request, response) => {
   response.status(200).json({
     taskId: request.params.taskId,
     message: 'Handling HTTP DELETE by ID'
