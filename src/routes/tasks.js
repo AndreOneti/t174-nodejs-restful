@@ -1,28 +1,32 @@
 const express = require('express');
 const router = express.Router();
 
-const TaskService = require('../services/taskService');
+const taskService = require('../services/taskService');
+const notFound = require('../middleware/not-found');
 
 const checkAuth = require('../middleware/check-auth');
 
 router.post('/', checkAuth, async (request, response) => {
 
-  const task = await TaskService.add(request.body);
+  const task = await taskService.add(request.body);
 
   response.status(200).json(task);
 });
 
-router.get('/', (request, response) => {
-  response.status(200).json({
-    message: 'Handling GET requests to /api/tasks'
-  });
+router.get('/', async (request, response) => {
+
+  const tasks = await taskService.getAll();
+
+  tasks && tasks.lenght
+    ? response.json(tasks)
+    : response.status(204).end();
 });
 
-router.get('/:taskId', (request, response) => {
-  response.status(200).json({
-    taskId: request.params.taskId,
-    message: 'Handling HTTP GET by ID'
-  });
+router.get('/:taskId', async (request, response) => {
+  const task = await taskService.getById(request.params.taskId);
+  task
+    ? response.json(task)
+    : notFound(request, response);
 });
 
 router.patch('/:taskId', checkAuth, (request, response) => {
